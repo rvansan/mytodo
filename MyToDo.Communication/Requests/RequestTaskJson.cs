@@ -1,7 +1,7 @@
 ﻿using MyToDo.Communication.Enums;
 
 namespace MyToDo.Communication.Requests;
-public class RequestNewTaskJson
+public class RequestTaskJson
 {
     public string Name { get; set; } = string.Empty;
 

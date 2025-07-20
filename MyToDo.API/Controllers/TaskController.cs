@@ -3,6 +3,7 @@ using MyToDo.Application.UseCases;
 using MyToDo.Application.UseCases.Create;
 using MyToDo.Application.UseCases.GetAll;
 using MyToDo.Application.UseCases.GetById;
+using MyToDo.Application.UseCases.Update;
 using MyToDo.Communication.Requests;
 using MyToDo.Communication.Responses;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ public class TaskController : ControllerBase
     [HttpPost]
     [ProducesResponseType(typeof(ResponseTaskCreatedJson), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status400BadRequest)]
-    public IActionResult Create([FromBody] RequestNewTaskJson request) 
+    public IActionResult Create([FromBody] RequestTaskJson request) 
     {
         var response = new CreateTaskUseCase().Execute(request);
         return Created(string.Empty, response);
@@ -45,5 +46,16 @@ public class TaskController : ControllerBase
     {
         var response = new GetTaskByIdUseCase().Execute(id);
         return Ok(response);
+    }
+
+
+    [HttpPut]
+    [Route("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status400BadRequest)]
+    public IActionResult Update([FromRoute] int id, [FromBody] RequestTaskJson request)
+    {
+        new UpdateTaskUseCase().Execute(id, request);
+        return NoContent();
     }
 }

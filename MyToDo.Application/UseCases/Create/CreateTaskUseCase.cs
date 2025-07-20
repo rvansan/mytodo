@@ -4,7 +4,7 @@ using MyToDo.Communication.Responses;
 namespace MyToDo.Application.UseCases.Create;
 public class CreateTaskUseCase
 {
-    public ResponseTaskCreatedJson Execute(RequestNewTaskJson request)
+    public ResponseTaskCreatedJson Execute(RequestTaskJson request)
     {
         return new ResponseTaskCreatedJson()
         {
