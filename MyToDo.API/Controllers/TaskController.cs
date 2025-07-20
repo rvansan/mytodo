@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyToDo.Application.UseCases;
 using MyToDo.Application.UseCases.Create;
+using MyToDo.Application.UseCases.Delete;
 using MyToDo.Application.UseCases.GetAll;
 using MyToDo.Application.UseCases.GetById;
 using MyToDo.Application.UseCases.Update;
@@ -42,7 +43,7 @@ public class TaskController : ControllerBase
     [Route("{id}")]
     [ProducesResponseType(typeof(ResponseTaskJson), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status404NotFound)]
-    public IActionResult Get([FromRoute] int id) 
+    public IActionResult GetById([FromRoute] int id) 
     {
         var response = new GetTaskByIdUseCase().Execute(id);
         return Ok(response);
@@ -58,4 +59,19 @@ public class TaskController : ControllerBase
         new UpdateTaskUseCase().Execute(id, request);
         return NoContent();
     }
+
+
+    [HttpDelete]
+    [Route("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status404NotFound)]
+    public IActionResult Delete([FromRoute] int id)
+    {
+        new DeleteTaskByIdUseCase().Execute(id);
+        return NoContent();
+    }
+
+
+
+
 }
