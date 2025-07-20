@@ -8,12 +8,8 @@ public class CreateTaskUseCase
     {
         return new ResponseTaskCreatedJson()
         {
-            Deadline = request.Deadline,
-            Description = request.Description,  
             Id = 1,
             Name = request.Name,
-            Priority = request.Priority,    
-            Status = request.Status,
         };
     }
 }

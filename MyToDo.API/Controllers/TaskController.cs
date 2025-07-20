@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyToDo.Application.UseCases;
 using MyToDo.Application.UseCases.Create;
 using MyToDo.Application.UseCases.GetAll;
+using MyToDo.Application.UseCases.GetById;
 using MyToDo.Communication.Requests;
 using MyToDo.Communication.Responses;
 using System.Collections.Generic;
@@ -32,5 +34,16 @@ public class TaskController : ControllerBase
             return Ok(response); 
         
         return NoContent();
+    }
+
+
+    [HttpGet]
+    [Route("{id}")]
+    [ProducesResponseType(typeof(ResponseTaskJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status404NotFound)]
+    public IActionResult Get([FromRoute] int id) 
+    {
+        var response = new GetTaskByIdUseCase().Execute(id);
+        return Ok(response);
     }
 }
