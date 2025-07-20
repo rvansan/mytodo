@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyToDo.Application.UseCases.Create;
+using MyToDo.Application.UseCases.GetAll;
 using MyToDo.Communication.Requests;
 using MyToDo.Communication.Responses;
+using System.Collections.Generic;
+using System.Runtime.Intrinsics.X86;
 
 namespace MyToDo.API.Controllers;
 [Route("api/[controller]")]
@@ -13,7 +16,21 @@ public class TaskController : ControllerBase
     [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status400BadRequest)]
     public IActionResult Create([FromBody] RequestNewTaskJson request) 
     {
-        var response = new CreateTaskUserCase().Execute(request);
+        var response = new CreateTaskUseCase().Execute(request);
         return Created(string.Empty, response);
+    }
+
+
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ResponseAllTaskJson), StatusCodes.Status200OK)]
+    public IActionResult GetAll()
+    {
+        var response = new GetAllTaskUseCase().Execute();
+
+        if (response.Tasks.Any())
+            return Ok(response); 
+        
+        return NoContent();
     }
 }

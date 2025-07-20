@@ -2,7 +2,7 @@
 using MyToDo.Communication.Responses;
 
 namespace MyToDo.Application.UseCases.Create;
-public class CreateTaskUserCase
+public class CreateTaskUseCase
 {
     public ResponseTaskCreatedJson Execute(RequestNewTaskJson request)
     {
